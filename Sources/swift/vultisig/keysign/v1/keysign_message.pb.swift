@@ -232,15 +232,6 @@ public struct VSKeysignPayload {
     set {_uniqueStorage()._vaultLocalPartyID = newValue}
   }
 
-  public var coinTrade: VSCoin {
-    get {return _storage._coinTrade ?? VSCoin()}
-    set {_uniqueStorage()._coinTrade = newValue}
-  }
-  /// Returns true if `coinTrade` has been explicitly set.
-  public var hasCoinTrade: Bool {return _storage._coinTrade != nil}
-  /// Clears the value of `coinTrade`. Subsequent reads from it will return its default value.
-  public mutating func clearCoinTrade() {_uniqueStorage()._coinTrade = nil}
-
   public var unknownFields = SwiftProtobuf.UnknownStorage()
 
   public enum OneOf_BlockchainSpecific: Equatable {
@@ -448,7 +439,6 @@ extension VSKeysignPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     30: .standard(proto: "erc20_approve_payload"),
     31: .standard(proto: "vault_public_key_ecdsa"),
     32: .standard(proto: "vault_local_party_id"),
-    33: .standard(proto: "coin_trade"),
   ]
 
   fileprivate class _StorageClass {
@@ -462,7 +452,6 @@ extension VSKeysignPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
     var _erc20ApprovePayload: VSErc20ApprovePayload? = nil
     var _vaultPublicKeyEcdsa: String = String()
     var _vaultLocalPartyID: String = String()
-    var _coinTrade: VSCoin? = nil
 
     #if swift(>=5.10)
       // This property is used as the initial default value for new instances of the type.
@@ -487,7 +476,6 @@ extension VSKeysignPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       _erc20ApprovePayload = source._erc20ApprovePayload
       _vaultPublicKeyEcdsa = source._vaultPublicKeyEcdsa
       _vaultLocalPartyID = source._vaultLocalPartyID
-      _coinTrade = source._coinTrade
     }
   }
 
@@ -683,7 +671,6 @@ extension VSKeysignPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         case 30: try { try decoder.decodeSingularMessageField(value: &_storage._erc20ApprovePayload) }()
         case 31: try { try decoder.decodeSingularStringField(value: &_storage._vaultPublicKeyEcdsa) }()
         case 32: try { try decoder.decodeSingularStringField(value: &_storage._vaultLocalPartyID) }()
-        case 33: try { try decoder.decodeSingularMessageField(value: &_storage._coinTrade) }()
         default: break
         }
       }
@@ -778,9 +765,6 @@ extension VSKeysignPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
       if !_storage._vaultLocalPartyID.isEmpty {
         try visitor.visitSingularStringField(value: _storage._vaultLocalPartyID, fieldNumber: 32)
       }
-      try { if let v = _storage._coinTrade {
-        try visitor.visitSingularMessageField(value: v, fieldNumber: 33)
-      } }()
     }
     try unknownFields.traverse(visitor: &visitor)
   }
@@ -800,7 +784,6 @@ extension VSKeysignPayload: SwiftProtobuf.Message, SwiftProtobuf._MessageImpleme
         if _storage._erc20ApprovePayload != rhs_storage._erc20ApprovePayload {return false}
         if _storage._vaultPublicKeyEcdsa != rhs_storage._vaultPublicKeyEcdsa {return false}
         if _storage._vaultLocalPartyID != rhs_storage._vaultLocalPartyID {return false}
-        if _storage._coinTrade != rhs_storage._coinTrade {return false}
         return true
       }
       if !storagesAreEqual {return false}
